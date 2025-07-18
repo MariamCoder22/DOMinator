@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOMinator - Frontend Skills Testing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .stats-bar {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-around;
+            color: white;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .category-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .category-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .category-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .category-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .question-count {
+            background: #f0f0f0;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .difficulty-indicator {
+            display: flex;
+            gap: 3px;
+        }
+
+        .difficulty-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ddd;
+        }
+
+        .difficulty-dot.active {
+            background: #667eea;
+        }
+
+        .quiz-container {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .quiz-title {
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .timer {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .timer-icon {
+            animation: tick 1s infinite;
+        }
+
+        @keyframes tick {
+            0%, 50% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+        }
+
+        .question-container {
+            margin-bottom: 30px;
+        }
+
+        .question-number {
+            background: #667eea;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        .answers-container {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .answer-option {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .answer-option:hover {
+            background: #e9ecef;
+            border-color: #667eea;
+        }
+
+        .answer-option.selected {
+            background: #667eea;
+            border-color: #667eea;
+            color: white;
+        }
+
+        .answer-option.correct {
+            background: #28a745;
+            border-color: #28a745;
+            color: white;
+        }
+
+        .answer-option.incorrect {
+            background: #dc3545;
+            border-color: #dc3545;
+            color: white;
+        }
+
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .progress-bar {
+            background: #e9ecef;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .results-container {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .results-score {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .results-message {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .results-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .results-stat {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .results-stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .results-stat-label {
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            z-index: 1000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-bar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .quiz-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-btn" onclick="showHome()" style="display: none;">← Back to Categories</button>
+        
+        <div class="header">
+            <h1>🎯 DOMinator</h1>
+            <p>Master Frontend Development Through Challenging Questions</p>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat-item">
+                <span class="stat-value" id="totalQuestions">0</span>
+                <span class="stat-label">Total Questions</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="completedQuizzes">0</span>
+                <span class="stat-label">Completed Quizzes</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="averageScore">0%</span>
+                <span class="stat-label">Average Score</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="timeSpent">0m</span>
+                <span class="stat-label">Time Spent</span>
+            </div>
+        </div>
+
+        <div id="homeContainer">
+            <div class="categories-grid" id="categoriesGrid">
+                <!-- Categories will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <div class="quiz-container" id="quizContainer">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            
+            <div class="quiz-header">
+                <div class="quiz-title" id="quizTitle"></div>
+                <div class="timer" id="timer">
+                    <span class="timer-icon">⏱️</span>
+                    <span id="timerDisplay">00:00</span>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="question-number" id="questionNumber"></div>
+                <div class="question-text" id="questionText"></div>
+                <div class="answers-container" id="answersContainer"></div>
+            </div>
+
+            <div class="quiz-controls">
+                <button class="btn btn-secondary" onclick="previousQuestion()" id="prevBtn">Previous</button>
+                <button class="btn btn-primary" onclick="nextQuestion()" id="nextBtn">Next Question</button>
+            </div>
+        </div>
+
+        <div class="results-container" id="resultsContainer">
+            <div class="results-score" id="finalScore"></div>
+            <div class="results-message" id="resultsMessage"></div>
+            <div class="results-stats" id="resultsStats"></div>
+            <button class="btn btn-primary" onclick="showHome()">Back to Categories</button>
+        </div>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <script>
+        // Application state
+        let currentQuiz = null;
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let quizTimer = null;
+        let startTime = null;
+        let timeElapsed = 0;
+
+        // Question bank structure - to be populated
+        const questionBank = {
+            'core-skills-combat': {
+                title: 'Core Skills Combat',
+                description: 'Master the fundamental building blocks of frontend development',
+                difficulty: 3,
+                timeLimit: 30, // minutes
+                questions: [
+                    // Questions will be added here
+                ]
+            },
+            'react-mastery-engine': {
+                title: 'React Mastery Engine',
+                description: 'Deep dive into React hooks, patterns, and advanced concepts',
+                difficulty: 4,
+                timeLimit: 45,
+                questions: []
+            },
+            'systems-design-fe': {
+                title: 'Systems Design for FE',
+                description: 'Architectural patterns and scalable frontend system design',
+                difficulty: 5,
+                timeLimit: 60,
+                questions: []
+            },
+            'global-challenge-vault': {
+                title: 'Global Challenge Vault',
+                description: 'International-level frontend development challenges',
+                difficulty: 5,
+                timeLimit: 90,
+                questions: []
+            },
+            'ui-rebuild-mode': {
+                title: 'UI Rebuild Mode',
+                description: 'Recreate complex UIs from scratch with pixel-perfect precision',
+                difficulty: 4,
+                timeLimit: 120,
+                questions: []
+            },
+            'css-bruteforce-lab': {
+                title: 'CSS Bruteforce Lab',
+                description: 'Advanced CSS techniques, animations, and layout challenges',
+                difficulty: 4,
+                timeLimit: 45,
+                questions: []
+            },
+            'debug-the-ui': {
+                title: 'Debug the UI',
+                description: 'Find and fix critical frontend bugs under pressure',
+                difficulty: 3,
+                timeLimit: 30,
+                questions: []
+            },
+            'mental-models': {
+                title: 'Meta/Mental Models',
+                description: 'Conceptual frameworks for frontend architecture thinking',
+                difficulty: 4,
+                timeLimit: 40,
+                questions: []
+            },
+            'real-company-questions': {
+                title: 'Real Company Questions',
+                description: 'Actual interview questions from top tech companies',
+                difficulty: 5,
+                timeLimit: 60,
+                questions: []
+            },
+            'whiteboard-questions': {
+                title: 'Whiteboard Questions',
+                description: 'Algorithm and data structure problems for frontend roles',
+                difficulty: 4,
+                timeLimit: 45,
+                questions: []
+            },
+            'frontend-puzzle-box': {
+                title: 'Frontend Puzzle Box',
+                description: 'Creative problem-solving challenges for frontend developers',
+                difficulty: 3,
+                timeLimit: 30,
+                questions: []
+            },
+            'web-assembly-tasks': {
+                title: 'Web Assembly Tasks',
+                description: 'High-performance computing challenges using WebAssembly',
+                difficulty: 5,
+                timeLimit: 60,
+                questions: []
+            },
+            'modular-rendering': {
+                title: 'Modular Rendering & Adaptive Hydration',
+                description: 'Advanced rendering patterns and selective hydration strategies',
+                difficulty: 5,
+                timeLimit: 50,
+                questions: []
+            },
+            'pwa-offline-challenges': {
+                title: 'PWA & Offline Mode Challenges',
+                description: 'Progressive web apps and offline-first development',
+                difficulty: 4,
+                timeLimit: 45,
+                questions: []
+            },
+            'responsive-theming': {
+                title: 'Advanced Responsive/Theming Tests',
+                description: 'Complex responsive design and dynamic theming systems',
+                difficulty: 4,
+                timeLimit: 40,
+                questions: []
+            },
+            'analytics-monitoring': {
+                title: 'Advanced Analytics & Monitoring',
+                description: 'Performance monitoring, error tracking, and user analytics',
+                difficulty: 4,
+                timeLimit: 35,
+                questions: []
+            },
+            'design-systems': {
+                title: 'Design Systems & Component Libraries',
+                description: 'Building and maintaining scalable design systems',
+                difficulty: 4,
+                timeLimit: 45,
+                questions: []
+            },
+            'realtime-streaming': {
+                title: 'Real-time & Streaming Technologies',
+                description: 'WebRTC, WebSockets, and streaming data in frontend apps',
+                difficulty: 5,
+                timeLimit: 50,
+                questions: []
+            },
+            'security-privacy': {
+                title: 'Advanced Security & Privacy',
+                description: 'Frontend security best practices and privacy compliance',
+                difficulty: 5,
+                timeLimit: 40,
+                questions: []
+            },
+            'performance-edge': {
+                title: 'Performance & Edge Computing',
+                description: 'Optimization strategies and edge computing for frontend',
+                difficulty: 5,
+                timeLimit: 45,
+                questions: []
+            },
+            'micro-frontend': {
+                title: 'Micro-Frontend Architecture',
+                description: 'Modular architecture patterns for large-scale applications',
+                difficulty: 5,
+                timeLimit: 60,
+                questions: []
+            },
+            'voice-gesture': {
+                title: 'Voice & Gesture Interfaces',
+                description: 'Building interfaces for voice commands and gesture recognition',
+                difficulty: 4,
+                timeLimit: 40,
+                questions: []
+            },
+            'accessibility-aria': {
+                title: 'Accessibility & ARIA Deep Dive',
+                description: 'Advanced accessibility patterns and ARIA implementation',
+                difficulty: 4,
+                timeLimit: 35,
+                questions: []
+            }
+        };
+
+        // Initialize the application
+        function init() {
+            renderCategories();
+            updateStats();
+            loadProgress();
+        }
+
+        // Render category cards
+        function renderCategories() {
+            const grid = document.getElementById('categoriesGrid');
+            grid.innerHTML = '';
+
+            Object.keys(questionBank).forEach(categoryId => {
+                const category = questionBank[categoryId];
+                const card = document.createElement('div');
+                card.className = 'category-card';
+                card.onclick = () => startQuiz(categoryId);
+                
+                const difficultyDots = Array.from({length: 5}, (_, i) => 
+                    `<div class="difficulty-dot ${i < category.difficulty ? 'active' : ''}"></div>`
+                ).join('');
+
+                card.innerHTML = `
+                    <div class="category-title">${category.title}</div>
+                    <div class="category-description">${category.description}</div>
+                    <div class="category-stats">
+                        <div class="question-count">${category.questions.length} questions</div>
+                        <div class="difficulty-indicator">${difficultyDots}</div>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        // Start a quiz
+        function startQuiz(categoryId) {
+            const category = questionBank[categoryId];
+            
+            if (category.questions.length === 0) {
+                showNotification('This category is coming soon! Questions will be added shortly.', 'info');
+                return;
+            }
+
+            currentQuiz = {
+                categoryId,
+                ...category
+            };
+            
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            timeElapsed = 0;
+            
+            document.getElementById('homeContainer').style.display = 'none';
+            document.getElementById('quizContainer').style.display = 'block';
+            document.querySelector('.back-btn').style.display = 'block';
+            
+            document.getElementById('quizTitle').textContent = category.title;
+            
+            startTimer();
+            renderQuestion();
+        }
+
+        // Start the quiz timer
+        function startTimer() {
+            startTime = Date.now();
+            quizTimer = setInterval(() => {
+                timeElapsed = Math.floor((Date.now() - startTime) / 1000);
+                const minutes = Math.floor(timeElapsed / 60);
+                const seconds = timeElapsed % 60;
+                document.getElementById('timerDisplay').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                // Check time limit
+                if (currentQuiz && timeElapsed >= currentQuiz.timeLimit * 60) {
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+
+        // Render current question
+        function renderQuestion() {
+            if (!currentQuiz || currentQuestionIndex >= currentQuiz.questions.length) {
+                finishQuiz();
+                return;
+            }
+
+            const question = currentQuiz.questions[currentQuestionIndex];
+            const progress = ((currentQuestionIndex + 1) / currentQuiz.questions.length) * 100;
+            
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            document.getElementById('questionNumber').textContent = 
+                `Question ${currentQuestionIndex + 1} of ${currentQuiz.questions.length}`;
+            document.getElementById('questionText').textContent = question.question;
+            
+            const answersContainer = document.getElementById('answersContainer');
+            answersContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const answerDiv = document.createElement('div');
+                answerDiv.className = 'answer-option';
+                answerDiv.textContent = option;
+                answerDiv.onclick = () => selectAnswer(index);
+                
+                if (userAnswers[currentQuestionIndex] === index) {
+                    answerDiv.classList.add('selected');
+                }
+                
+                answersContainer.appendChild(answerDiv);
+            });
+            
+            updateNavigationButtons();
+        }
+
+        // Select an answer
+        function selectAnswer(answerIndex) {
+            userAnswers[currentQuestionIndex] = answerIndex;
+            
+            // Update UI
+            document.querySelectorAll('.answer-option').forEach((option, index) => {
+                option.classList.remove('selected');
+                if (index === answerIndex) {
+                    option.classList.add('selected');
+                }
+            });
+            
+            // Auto-advance after short delay
+            setTimeout(() => {
+                if (currentQuestionIndex < currentQuiz.questions.length - 1) {
+                    nextQuestion();
+                } else {
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+
+        // Navigation functions
+        function nextQuestion() {
+            if (currentQuestionIndex < currentQuiz.questions.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+            }
+        }
+
+        function updateNavigationButtons() {
+            document.getElementById('prevBtn').style.display = 
+                currentQuestionIndex > 0 ? 'block' : 'none';
+            document.getElementById('nextBtn').textContent = 
+                currentQuestionIndex === currentQuiz.questions.length - 1 ? 'Finish Quiz' : 'Next Question';
+        }
+
+        // Finish the quiz
+        function finishQuiz() {
+            clearInterval(quizTimer);
+            
+            const score = calculateScore();
+            const results = {
+                categoryId: currentQuiz.categoryId,
+                score: score,
+                timeElapsed: timeElapsed,
+                answers: userAnswers
+            };
+            
+            saveResults(results);
+            showResults(results);
+        }
+
+        // Calculate quiz score
+        function calculateScore() {
+            let correct = 0;
+            userAnswers.forEach((answer, index) => {
+                if (currentQuiz.questions[index] && answer === currentQuiz.questions[index].correct) {
+                    correct++;
+                }
+            });
+            return Math.round((correct / currentQuiz.questions.length) * 100);
+        }
+
+        // Show results
+        function showResults(results) {
+            document.getElementById('quizContainer').style.display = 'none';
+            document.getElementById('resultsContainer').style.display = 'block';
+            
+            const score = results.score;
+            const minutes = Math.floor(results.timeElapsed / 60);
+            const seconds = results.timeElapsed % 60;
+            
+            document.getElementById('finalScore').textContent = `${score}%`;
+            
+            let message = '';
+            if (score >= 90) message = '🎉 Outstanding! You\'re a frontend master!';
+            else if (score >= 80) message = '🌟 Excellent work! You\'re well on your way!';
+            else if (score >= 70) message = '👍 Good job! Keep practicing to improve!';
+            else if (score >= 60) message = '📚 Not bad! Review the concepts and try again!';
+            else message = '💪 Keep studying! You\'ll get there with practice!';
+            
+            document.getElementById('resultsMessage').textContent = message;
+            
+            document.getElementById('resultsStats').innerHTML = `
+                <div class="results-stat">
+                    <div class="results-stat-value">${results.answers.length}</div>
+                    <div class="results-stat-label">Questions Answered</div>
+                </div>
+                <div class="results-stat">
+                    <div class="results-stat-value">${minutes}m ${seconds}s</div>
+                    <div class="results-stat-label">Time Taken</div>
+                </div>
+                <div class="results-stat">
+                    <div class="results-stat-value">${Math.round(results.answers.length / (results.timeElapsed / 60))}</div>
+                    <div class="results-stat-label">Questions/min</div>
+                </div>
+            `;
+            
+            updateStats();
+        }
+
+        // Show home screen
+        function showHome() {
+            document.getElementById('homeContainer').style.display = 'block';
+            document.getElementById('quizContainer').style.display = 'none';
+            document.getElementById('resultsContainer').style.display = 'none';
+            document.querySelector('.back-btn').style.display = 'none';
+            
+            if (quizTimer) {
+                clearInterval(quizTimer);
+            }
+            
+            currentQuiz = null;
+            currentQuestionIndex = 0;
+            userAnswers = [];
+        }
+
+        // Save results to memory
+        function saveResults(results) {
+            const savedResults = JSON.parse(localStorage.getItem('dominatorResults') || '[]');
+            savedResults.push({
+                ...results,
+                timestamp: Date.now()
+            });
+            localStorage.setItem('dominatorResults', JSON.stringify(savedResults));
+        }
+
+        // Load progress from memory
+        function loadProgress() {
+            // This would typically load from localStorage
+            // For now, we'll just use default values
+        }
+
+        // Update stats display
+        function updateStats() {
+            const savedResults = JSON.parse(localStorage.getItem('dominatorResults') || '[]');
+            
+            const totalQuestions = savedResults.reduce((sum, result) => sum + result.answers.length, 0);
+            const completedQuizzes = savedResults.length;
+            const averageScore = savedResults.length > 0 ? 
+                Math.round(savedResults.reduce((sum, result) => sum + result.score, 0) / savedResults.length) : 0;
+            const totalTime = savedResults.reduce((sum, result) => sum + result.timeElapsed, 0);
+            
+            document.getElementById('totalQuestions').textContent = totalQuestions;
+            document.getElementById('completedQuizzes').textContent = completedQuizzes;
+            document.getElementById('averageScore').textContent = `${averageScore}%`;
+            document.getElementById('timeSpent').textContent = `${Math.round(totalTime / 60)}m`;
+        }
+
+        // Show notification
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Initialize the app when the page loads
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
