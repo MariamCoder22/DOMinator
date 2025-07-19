@@ -488,192 +488,195 @@
         let startTime = null;
         let timeElapsed = 0;
 
-        // Question bank structure - to be populated
         const questionBank = {
-            'core-skills-combat': {
-                title: 'Core Skills Combat',
-                description: 'Master the fundamental building blocks of frontend development',
-                difficulty: 3,
-                timeLimit: 30, // minutes
-                questions: [ Question 1: "What does the DOCTYPE declaration do in HTML5?" Options: "Defines the document type and version", "Creates a new HTML element", "Links external stylesheets", "Validates the HTML code" Correct: 0
-Question 2: "Which HTML element is used for the largest heading?" Options: "h6", "h1", "header", "title" Correct: 1
-Question 3: "What is the correct HTML element for inserting a line break?" Options: "break", "lb", "br", "newline" Correct: 2
-Question 4: "Which attribute specifies the URL of the page the link goes to?" Options: "src", "href", "link", "url" Correct: 1
-Question 5: "What does the alt attribute in an img tag provide?" Options: "Alternative text for screen readers", "Image alignment", "Image size", "Image format" Correct: 0
-Question 6: "Which HTML element is used to define important text?" Options: "important", "strong", "b", "em" Correct: 1
-Question 7: "What is the correct HTML element for playing video files?" Options: "movie", "video", "media", "film" Correct: 1
-Question 8: "Which HTML attribute is used to define inline styles?" Options: "class", "style", "css", "styles" Correct: 1
-Question 9: "What does the target='_blank' attribute do in an anchor tag?" Options: "Opens link in same window", "Opens link in new tab/window", "Closes current window", "Refreshes current page" Correct: 1
-Question 10: "Which HTML element is used to create a dropdown list?" Options: "dropdown", "list", "select", "option" Correct: 2
-Question 11: "What is the correct HTML element for inserting an image?" Options: "image", "img", "picture", "photo" Correct: 1
-Question 12: "Which HTML element defines navigation links?" Options: "navigation", "nav", "menu", "links" Correct: 1
-Question 13: "What does the placeholder attribute do in form inputs?" Options: "Sets default value", "Shows hint text", "Validates input", "Styles the input" Correct: 1
-Question 14: "Which HTML element is used to define a table row?" Options: "table-row", "tr", "row", "td" Correct: 1
-Question 15: "What is the correct HTML element for the largest heading?" Options: "head", "h6", "heading", "h1" Correct: 3
-Question 16: "Which attribute makes an input field required?" Options: "required", "mandatory", "needed", "must" Correct: 0
-Question 17: "What does the span element do?" Options: "Creates line break", "Inline container for styling", "Block-level container", "Table cell" Correct: 1
-Question 18: "Which HTML element defines a section in a document?" Options: "section", "div", "article", "part" Correct: 0
-Question 19: "What is the correct HTML element for emphasized text?" Options: "italic", "i", "em", "emphasis" Correct: 2
-Question 20: "Which HTML element is used to define metadata?" Options: "meta", "metadata", "info", "data" Correct: 0
-Question 21: "What does the defer attribute do in a script tag?" Options: "Delays script execution", "Caches the script", "Validates the script", "Compresses the script" Correct: 0
-Question 22: "Which HTML element creates a clickable button?" Options: "click", "button", "input", "btn" Correct: 1
-Question 23: "What is the correct HTML element for an unordered list?" Options: "list", "ul", "ol", "ulist" Correct: 1
-Question 24: "Which attribute specifies the character encoding for HTML documents?" Options: "encoding", "charset", "char", "code" Correct: 1
-Question 25: "What does the article element represent?" Options: "Newspaper article only", "Independent, self-contained content", "Title of document", "Author information" Correct: 1
-Question 26: "Which HTML element is used for client-side scripting?" Options: "javascript", "script", "js", "code" Correct: 1
-Question 27: "What is the correct HTML element for inserting a horizontal rule?" Options: "hr", "line", "rule", "horizontal" Correct: 0
-Question 28: "Which HTML element defines a footer for a document?" Options: "bottom", "footer", "end", "foot" Correct: 1
-Question 29: "What does the readonly attribute do?" Options: "Makes input editable", "Makes input uneditable", "Hides input", "Validates input" Correct: 1
-Question 30: "Which HTML element is used to define a description list?" Options: "dl", "desc", "definition", "dlist" Correct: 0
-Question 31: "What is the correct HTML element for preformatted text?" Options: "pre", "format", "text", "code" Correct: 0
-Question 32: "Which HTML element defines a header for a document?" Options: "head", "header", "top", "title" Correct: 1
-Question 33: "What does the autocomplete attribute control?" Options: "Automatic form submission", "Browser's autocomplete feature", "Input validation", "Form styling" Correct: 1
-Question 34: "Which HTML element is used to define a table header?" Options: "th", "thead", "header", "table-header" Correct: 0
-Question 35: "What is the correct HTML element for a paragraph?" Options: "paragraph", "p", "text", "para" Correct: 1
-Question 36: "Which HTML element embeds another document within the current document?" Options: "embed", "iframe", "object", "include" Correct: 1
-Question 37: "What does the contenteditable attribute do?" Options: "Makes element editable", "Validates content", "Styles content", "Hides content" Correct: 0
-Question 38: "Which HTML element is used to define keyboard input?" Options: "keyboard", "kbd", "key", "input" Correct: 1
-Question 39: "What is the correct HTML element for sample output?" Options: "output", "sample", "samp", "result" Correct: 2
-Question 40: "Which HTML element defines a variable?" Options: "variable", "var", "v", "val" Correct: 1
-Question 41: "What does the hidden attribute do?" Options: "Makes element invisible", "Hides element completely", "Reduces opacity", "Minimizes element" Correct: 1
-Question 42: "Which HTML element is used to define a citation?" Options: "citation", "cite", "quote", "ref" Correct: 1
-Question 43: "What is the correct HTML element for deleted text?" Options: "delete", "del", "removed", "strike" Correct: 1
-Question 44: "Which HTML element defines inserted text?" Options: "insert", "ins", "added", "new" Correct: 1
-Question 45: "What does the draggable attribute enable?" Options: "Element selection", "Drag and drop functionality", "Element movement", "Touch gestures" Correct: 1
-Question 46: "Which HTML element is used to define a progress indicator?" Options: "progress", "loading", "status", "indicator" Correct: 0
-Question 47: "What is the correct HTML element for a gauge?" Options: "gauge", "meter", "measure", "scale" Correct: 1
-Question 48: "Which HTML element defines a dialog box?" Options: "dialog", "modal", "popup", "window" Correct: 0
-Question 49: "What does the spellcheck attribute control?" Options: "Grammar checking", "Spell checking", "Text validation", "Language detection" Correct: 1
-Question 50: "Which HTML element is used to define details that can be opened/closed?" Options: "details", "summary", "collapsible", "accordion" Correct: 0
-CSS Fundamentals (Questions 51-100)
-Question 51: "What does CSS stand for?" Options: "Computer Style Sheets", "Creative Style Sheets", "Cascading Style Sheets", "Colorful Style Sheets" Correct: 2
-Question 52: "Which CSS property is used to change the text color?" Options: "text-color", "color", "font-color", "text-style" Correct: 1
-Question 53: "What is the correct CSS syntax for making all p elements bold?" Options: "p {font-weight: bold;}", "p {text-weight: bold;}", "p {font: bold;}", "p {weight: bold;}" Correct: 0
-Question 54: "Which CSS property controls the size of text?" Options: "text-size", "font-size", "text-style", "size" Correct: 1
-Question 55: "What does the z-index property control?" Options: "Element size", "Element position", "Stacking order", "Element color" Correct: 2
-Question 56: "Which CSS property is used to change the background color?" Options: "bg-color", "background-color", "color", "background" Correct: 1
-Question 57: "What is the default value of the position property?" Options: "absolute", "relative", "fixed", "static" Correct: 3
-Question 58: "Which CSS property controls the space between elements?" Options: "spacing", "margin", "padding", "gap" Correct: 1
-Question 59: "What does the display: none property do?" Options: "Makes element invisible", "Hides element completely", "Reduces opacity", "Minimizes element" Correct: 1
-Question 60: "Which CSS property is used to create rounded corners?" Options: "corner-radius", "border-radius", "round-corner", "radius" Correct: 1
-Question 61: "What is the correct CSS syntax for changing the font family?" Options: "font-family: Arial;", "font: Arial;", "family: Arial;", "text-family: Arial;" Correct: 0
-Question 62: "Which CSS property controls the transparency of an element?" Options: "transparency", "opacity", "alpha", "transparent" Correct: 1
-Question 63: "What does the float property do?" Options: "Makes element float in air", "Positions element left or right", "Makes element draggable", "Changes element size" Correct: 1
-Question 64: "Which CSS property is used to change the cursor?" Options: "cursor", "pointer", "mouse", "hand" Correct: 0
-Question 65: "What is the correct CSS syntax for making text italic?" Options: "font-style: italic;", "text-style: italic;", "font: italic;", "style: italic;" Correct: 0
-Question 66: "Which CSS property controls the line height?" Options: "line-height", "height", "text-height", "line-spacing" Correct: 0
-Question 67: "What does the overflow property control?" Options: "Element size", "Content that doesn't fit", "Element position", "Element color" Correct: 1
-Question 68: "Which CSS property is used to add shadow to text?" Options: "text-shadow", "shadow", "font-shadow", "text-effect" Correct: 0
-Question 69: "What is the correct CSS syntax for centering text?" Options: "text-align: center;", "align: center;", "center: true;", "text-center: true;" Correct: 0
-Question 70: "Which CSS property controls the space inside an element?" Options: "margin", "padding", "spacing", "inside" Correct: 1
-Question 71: "What does the visibility: hidden property do?" Options: "Removes element completely", "Makes element invisible but keeps space", "Makes element transparent", "Minimizes element" Correct: 1
-Question 72: "Which CSS property is used to change the list style?" Options: "list-style", "list-type", "bullet-style", "marker-style" Correct: 0
-Question 73: "What is the correct CSS syntax for adding a border?" Options: "border: 1px solid black;", "border-style: 1px solid black;", "outline: 1px solid black;", "edge: 1px solid black;" Correct: 0
-Question 74: "Which CSS property controls the width of an element?" Options: "size", "width", "w", "element-width" Correct: 1
-Question 75: "What does the box-sizing property control?" Options: "Element size", "Box model calculation", "Element position", "Element color" Correct: 1
-Question 76: "Which CSS property is used to create animations?" Options: "animation", "animate", "motion", "transition" Correct: 0
-Question 77: "What is the correct CSS syntax for making text uppercase?" Options: "text-transform: uppercase;", "text-case: uppercase;", "font-case: uppercase;", "case: uppercase;" Correct: 0
-Question 78: "Which CSS property controls the space between lines?" Options: "line-spacing", "line-height", "text-spacing", "vertical-spacing" Correct: 1
-Question 79: "What does the white-space property control?" Options: "Background color", "Text wrapping and spacing", "Element spacing", "Font color" Correct: 1
-Question 80: "Which CSS property is used to clip an element?" Options: "clip", "crop", "cut", "trim" Correct: 0
-Question 81: "What is the correct CSS syntax for making an element flexible?" Options: "display: flex;", "flex: true;", "flexible: true;", "layout: flex;" Correct: 0
-Question 82: "Which CSS property controls the order of flex items?" Options: "flex-order", "order", "sequence", "position" Correct: 1
-Question 83: "What does the grid-template-columns property define?" Options: "Grid rows", "Grid columns", "Grid size", "Grid position" Correct: 1
-Question 84: "Which CSS property is used to align items in a container?" Options: "align-items", "item-align", "align", "items" Correct: 0
-Question 85: "What is the correct CSS syntax for creating a transition?" Options: "transition: property duration;", "animate: property duration;", "change: property duration;", "effect: property duration;" Correct: 0
-Question 86: "Which CSS property controls the direction of text?" Options: "text-direction", "direction", "text-flow", "flow" Correct: 1
-Question 87: "What does the resize property allow?" Options: "Element rotation", "Element resizing by user", "Element scaling", "Element movement" Correct: 1
-Question 88: "Which CSS property is used to control table borders?" Options: "border-collapse", "table-border", "border-style", "table-style" Correct: 0
-Question 89: "What is the correct CSS syntax for creating a gradient?" Options: "background: linear-gradient();", "gradient: linear();", "background-gradient: linear();", "color: gradient();" Correct: 0
-Question 90: "Which CSS property controls the size of background images?" Options: "background-size", "image-size", "bg-size", "background-scale" Correct: 0
-Question 91: "What does the object-fit property control?" Options: "Element fit", "Image/video fit in container", "Text fit", "Container fit" Correct: 1
-Question 92: "Which CSS property is used to create CSS variables?" Options: "variable", "var", "custom-property", "--property" Correct: 3
-Question 93: "What is the correct CSS syntax for using a CSS variable?" Options: "var(--variable-name)", "variable(name)", "custom(name)", "property(name)" Correct: 0
-Question 94: "Which CSS property controls the blend mode of elements?" Options: "blend-mode", "mix-blend-mode", "blend", "mix" Correct: 1
-Question 95: "What does the filter property allow?" Options: "Element filtering", "Visual effects on elements", "Content filtering", "Style filtering" Correct: 1
-Question 96: "Which CSS property is used to control scrolling behavior?" Options: "scroll-behavior", "scroll-style", "scrolling", "scroll" Correct: 0
-Question 97: "What is the correct CSS syntax for creating a sticky element?" Options: "position: sticky;", "sticky: true;", "position: fixed;", "stick: true;" Correct: 0
-Question 98: "Which CSS property controls the appearance of elements?" Options: "appearance", "style", "look", "visual" Correct: 0
-Question 99: "What does the contain property help with?" Options: "Element containment", "Performance optimization", "Style isolation", "All of the above" Correct: 3
-Question 100: "Which CSS property is used for responsive design?" Options: "responsive", "media", "@media", "screen" Correct: 2
-JavaScript Fundamentals (Questions 101-150)
-Question 101: "What does 'var' declare in JavaScript?" Options: "A constant", "A variable", "A function", "A class" Correct: 1
-Question 102: "Which method is used to add an element to the end of an array?" Options: "append()", "push()", "add()", "insert()" Correct: 1
-Question 103: "What is the correct way to create a function in JavaScript?" Options: "function myFunction() {}", "create function myFunction() {}", "def myFunction() {}", "function = myFunction() {}" Correct: 0
-Question 104: "Which operator is used to assign a value to a variable?" Options: "=", "==", "===", "=>" Correct: 0
-Question 105: "What does the '===' operator do?" Options: "Assigns value", "Compares value only", "Compares value and type", "Compares reference" Correct: 2
-Question 106: "Which method is used to remove the last element from an array?" Options: "remove()", "pop()", "delete()", "splice()" Correct: 1
-Question 107: "What is the correct way to write a JavaScript comment?" Options: "// This is a comment", "<!-- This is a comment -->", "/* This is a comment */", "Both A and C" Correct: 3
-Question 108: "Which event occurs when a user clicks on an HTML element?" Options: "onchange", "onclick", "onmouseclick", "onselect" Correct: 1
-Question 109: "What does the 'typeof' operator return?" Options: "The value of variable", "The type of variable", "The size of variable", "The name of variable" Correct: 1
-Question 110: "Which method is used to find the length of a string?" Options: "length()", "size()", "length", "count()" Correct: 2
-Question 111: "What is the correct way to declare a constant in JavaScript?" Options: "const myVar = 5;", "constant myVar = 5;", "var myVar = 5;", "let myVar = 5;" Correct: 0
-Question 112: "Which method is used to convert a string to lowercase?" Options: "toLowerCase()", "lower()", "lowerCase()", "toLower()" Correct: 0
-Question 113: "What does the 'return' statement do in a function?" Options: "Exits the function", "Returns a value", "Both A and B", "Restarts the function" Correct: 2
-Question 114: "Which method is used to join array elements into a string?" Options: "join()", "concat()", "merge()", "combine()" Correct: 0
-Question 115: "What is the correct way to write an if statement in JavaScript?" Options: "if i = 5 then", "if (i == 5)", "if i == 5", "if i = 5" Correct: 1
-Question 116: "Which method is used to add elements to the beginning of an array?" Options: "unshift()", "push()", "insert()", "prepend()" Correct: 0
-Question 117: "What does the 'null' value represent?" Options: "Zero", "Empty string", "Intentionally empty value", "Undefined variable" Correct: 2
-Question 118: "Which method is used to remove elements from an array?" Options: "remove()", "delete()", "splice()", "cut()" Correct: 2
-Question 119: "What is the correct way to create an object in JavaScript?" Options: "var obj = {}", "var obj = []", "var obj = ()", "var obj = new Array()" Correct: 0
-Question 120: "Which method is used to find an element in an array?" Options: "search()", "find()", "locate()", "indexOf()" Correct: 1
-Question 121: "What does the 'break' statement do?" Options: "Stops the program", "Exits a loop", "Throws an error", "Restarts a loop" Correct: 1
-Question 122: "Which method is used to iterate over array elements?" Options: "for()", "forEach()", "iterate()", "loop()" Correct: 1
-Question 123: "What is the correct way to handle errors in JavaScript?" Options: "try...catch", "error...handle", "catch...error", "handle...error" Correct: 0
-Question 124: "Which method is used to convert a string to a number?" Options: "Number()", "parseInt()", "parseFloat()", "All of the above" Correct: 3
-Question 125: "What does the 'continue' statement do?" Options: "Continues the program", "Skips current iteration", "Exits the loop", "Restarts the loop" Correct: 1
-Question 126: "Which method is used to create a new array with filtered elements?" Options: "filter()", "select()", "where()", "find()" Correct: 0
-Question 127: "What is the correct way to declare a variable that can be reassigned?" Options: "const", "var", "let", "Both B and C" Correct: 3
-Question 128: "Which method is used to transform array elements?" Options: "transform()", "map()", "change()", "modify()" Correct: 1
-Question 129: "What does the 'this' keyword refer to?" Options: "Current object", "Previous object", "Next object", "Global object" Correct: 0
-Question 130: "Which method is used to check if an array includes a certain element?" Options: "contains()", "includes()", "has()", "exists()" Correct: 1
-Question 131: "What is the correct way to create a promise in JavaScript?" Options: "new Promise()", "Promise.create()", "createPromise()", "promise()" Correct: 0
-Question 132: "Which method is used to handle promise resolution?" Options: "then()", "resolve()", "success()", "done()" Correct: 0
-Question 133: "What does the 'async' keyword do?" Options: "Makes function asynchronous", "Makes function faster", "Makes function parallel", "Makes function delayed" Correct: 0
-Question 134: "Which method is used to wait for a promise to resolve?" Options: "wait()", "await", "pause()", "delay()" Correct: 1
-Question 135: "What is the correct way to destructure an array?" Options: "[a, b] = array", "(a, b) = array", "{a, b} = array", "a, b = array" Correct: 0
-Question 136: "Which method is used to combine multiple arrays?" Options: "combine()", "concat()", "merge()", "join()" Correct: 1
-Question 137: "What does the 'spread' operator (...) do?" Options: "Spreads elements", "Copies arrays/objects", "Expands iterables", "All of the above" Correct: 3
-Question 138: "Which method is used to reduce an array to a single value?" Options: "reduce()", "sum()", "combine()", "aggregate()" Correct: 0
-Question 139: "What is the correct way to create a class in JavaScript?" Options: "class MyClass {}", "create class MyClass {}", "def MyClass {}", "new class MyClass {}" Correct: 0
-Question 140: "Which method is used to create a new instance of a class?" Options: "create", "new", "instance", "make" Correct: 1
-Question 141: "What does the 'super' keyword do?" Options: "Calls parent class", "Creates super object", "Makes class superior", "Extends functionality" Correct: 0
-Question 142: "Which method is used to convert an object to a JSON string?" Options: "JSON.stringify()", "JSON.parse()", "toString()", "toJSON()" Correct: 0
-Question 143: "What is the correct way to import a module?" Options: "import module from 'file'", "require('file')", "include 'file'", "Both A and B" Correct: 3
-Question 144: "Which method is used to export from a module?" Options: "export", "module.exports", "exports", "All of the above" Correct: 3
-Question 145: "What does the 'setTimeout' function do?" Options: "Sets system time", "Delays execution", "Times out requests", "Sets time limit" Correct: 1
-Question 146: "Which method is used to repeat execution at intervals?" Options: "setInterval()", "repeat()", "loop()", "cycle()" Correct: 0
-Question 147: "What is the correct way to handle multiple promises?" Options: "Promise.all()", "Promise.multiple()", "Promise.many()", "Promise.batch()" Correct: 0
-Question 148: "Which method is used to get the current timestamp?" Options: "Date.now()", "Date.time()", "Date.current()", "Date.timestamp()" Correct: 0
-Question 149: "What does the 'instanceof' operator check?" Options: "Object type", "Object instance", "Object inheritance", "Object properties" Correct: 1
-Question 150: "Which method is used to prevent default browser behavior?" Options: "preventDefault()", "stopDefault()", "cancelDefault()", "blockDefault()" Correct: 0
-DOM Manipulation & Events (Questions 151-200)
-Question 151: "What does DOM stand for?" Options: "Document Object Model", "Data Object Management", "Dynamic Object Model", "Document Oriented Model" Correct: 0
-Question 152: "Which method is used to select an element by its ID?" Options: "getElementById()", "selectById()", "findById()", "getElementId()" Correct: 0
-Question 153: "What method is used to select elements by class name?" Options: "getElementsByClass()", "getElementsByClassName()", "selectByClass()", "findByClassName()" Correct: 1
-Question 154: "Which method is used to create a new HTML element?" Options: "createElement()", "createNode()", "newElement()", "addElement()" Correct: 0
-Question 155: "What method is used to add a child element?" Options: "appendChild()", "addChild()", "insertChild()", "attachChild()" Correct: 0
-Question 156: "Which method is used to remove an element from the DOM?" Options: "removeChild()", "deleteElement()", "removeElement()", "remove()" Correct: 0
-Question 157: "What property is used to change the text content of an element?" Options: "innerHTML", "textContent", "text", "content" Correct: 1
-Question 158: "Which property is used to change the HTML content of an element?" Options: "textContent", "innerHTML", "html", "content" Correct: 1
-Question 159: "What method is used to add an event listener?" Options: "addEventListener()", "addListener()", "attachEvent()", "onEvent()" Correct: 0
-Question 160: "Which method is used to remove an event listener?" Options: "removeEventListener()", "removeListener()", "detachEvent()", "offEvent()" Correct: 0
-Question 161: "What is the correct way to prevent event bubbling?" Options: "stopPropagation()", "preventDefault()", "stopBubbling()", "cancelBubble()" Correct: 0
-Question 162: "Which method is used to select the first element matching a CSS selector?" Options: "querySelector()", "selectFirst()", "findFirst()", "getFirst()" Correct: 0
-Question 163: "What method is used to select all elements matching a CSS selector?" Options: "querySelectorAll()", "selectAll()", "findAll()", "getAll()" Correct: 0
-Question 164: "Which property gives you the parent element of a node?" Options: "parent", "parentNode", "parentElement", "Both B and C" Correct: 3
-Question 165: "What property contains all child elements of a node?" Options: "children", "childNodes", "kids", "elements" Correct: 0
-Question 166: "Which method is used to insert an element before another element?" Options: "insertBefore()", "insertBeforeElement()", "addBefore()", "placeBefore()" Correct: 0
-Question 167: "What method is used to replace an element?" Options: "replaceChild()", "replaceElement()", "substitute()", "replace()" Correct: 0
-Question 168: "Which method is used to clone an element?" Options: "cloneNode()", "cloneElement()", "copy()", "duplicate()" Correct: 0
-Question 169: "What property is used to get or set an element's attributes?" Options: "getAttribute()", "setAttribute()", "attributes", "All of the above" Correct: 3
-Question 170: "Which method is used to check if an element has a specific attribute?" Options: "hasAttribute()", "containsAttribute()", "checkAttribute()", "getAttribute()" Correct: 0
-Question 171: "What method is used to remove an attribute from an element?" Options: "removeAttribute()", "deleteAttribute()", "clearAttribute()", "unsetAttribute()" Correct: 0
-Question 172: "Which property is used to get the computed style of an element?" Options: "getComputedStyle()", "computedStyle", "style", "getStyle()" Correct: 0
-Question 173: "What method is used to get elements by their tag name?" Options: "getElementsByTagName()", "getByTagName()", "selectByTag()", "findByTag()" Correct: 0
-Question 174: "Which property gives you the next sibling element?" Correct: 0,
-                    // Questions will be added here
-                ]
+  'core-skills-combat': {
+    title: 'Core Skills Combat',
+    description: 'Master the fundamental building blocks of frontend development',
+    difficulty: 3,
+    timeLimit: 30, // minutes
+    questions: [
+      {
+        question: "What does the DOCTYPE declaration do in HTML5?",
+        options: [
+          "Defines the document type and version",
+          "Creates a new HTML element",
+          "Links external stylesheets",
+          "Validates the HTML code"
+        ],
+        correct: 0
+      },
+      {
+        question: "Which HTML element is used for the largest heading?",
+        options: ["h6", "h1", "header", "title"],
+        correct: 1
+      },
+      {
+        question: "What is the correct HTML element for inserting a line break?",
+        options: ["break", "lb", "br", "newline"],
+        correct: 2
+      },
+      {
+        question: "Which attribute specifies the URL of the page the link goes to?",
+        options: ["src", "href", "link", "url"],
+        correct: 1
+      }// Fixed questionBank format (all questions included)
+      const questionBank = {
+  'core-skills-combat': {
+    title: 'Core Skills Combat',
+    description: 'Master the fundamental building blocks of frontend development',
+    difficulty: 3,
+    timeLimit: 30, // minutes
+    questions: [
+      {
+        question: "What does the DOCTYPE declaration do in HTML5?",
+        options: ["Defines the document type and version", "Creates a new HTML element", "Links external stylesheets", "Validates the HTML code"],
+        correct: 0
+      },
+      {
+        question: "Which HTML element is used for the largest heading?",
+        options: ["h6", "h1", "header", "title"],
+        correct: 1
+      },
+      {
+        question: "What is the correct HTML element for inserting a line break?",
+        options: ["break", "lb", "br", "newline"],
+        correct: 2
+      },
+      {
+        question: "Which attribute specifies the URL of the page the link goes to?",
+        options: ["src", "href", "link", "url"],
+        correct: 1
+      },
+      {
+        question: "What does the alt attribute in an img tag provide?",
+        options: ["Alternative text for screen readers", "Image alignment", "Image size", "Image format"],
+        correct: 0
+      },
+      {
+        question: "Which HTML element is used to define important text?",
+        options: ["important", "strong", "b", "em"],
+        correct: 1
+      },
+      {
+        question: "What is the correct HTML element for playing video files?",
+        options: ["movie", "video", "media", "film"],
+        correct: 1
+      },
+      {
+        question: "Which HTML attribute is used to define inline styles?",
+        options: ["class", "style", "css", "styles"],
+        correct: 1
+      },
+      {
+        question: "What does the target='_blank' attribute do in an anchor tag?",
+        options: ["Opens link in same window", "Opens link in new tab/window", "Closes current window", "Refreshes current page"],
+        correct: 1
+      },
+      {
+        question: "Which HTML element is used to create a dropdown list?",
+        options: ["dropdown", "list", "select", "option"],
+        correct: 2
+      },
+      {
+        question: "What is the correct HTML element for inserting an image?",
+        options: ["image", "img", "picture", "photo"],
+        correct: 1
+      },
+      {
+        question: "Which HTML element defines navigation links?",
+        options: ["navigation", "nav", "menu", "links"],
+        correct: 1
+      },
+      {
+        question: "What does the placeholder attribute do in form inputs?",
+        options: ["Sets default value", "Shows hint text", "Validates input", "Styles the input"],
+        correct: 1
+      },
+      {
+        question: "Which HTML element is used to define a table row?",
+        options: ["table-row", "tr", "row", "td"],
+        correct: 1
+      },
+      {
+        question: "What is the correct HTML element for the largest heading?",
+        options: ["head", "h6", "heading", "h1"],
+        correct: 3
+      },
+      {
+        question: "Which attribute makes an input field required?",
+        options: ["required", "mandatory", "needed", "must"],
+        correct: 0
+      },
+      {
+        question: "What does the span element do?",
+        options: ["Creates line break", "Inline container for styling", "Block-level container", "Table cell"],
+        correct: 1
+      },
+      {
+        question: "Which HTML element defines a section in a document?",
+        options: ["section", "div", "article", "part"],
+        correct: 0
+      },
+      {
+        question: "What is the correct HTML element for emphasized text?",
+        options: ["italic", "i", "em", "emphasis"],
+        correct: 2
+      },
+      {
+        question: "Which HTML element is used to define metadata?",
+        options: ["meta", "metadata", "info", "data"],
+        correct: 0
+      },
+      {
+        question: "What does the defer attribute do in a script tag?",
+        options: ["Delays script execution", "Caches the script", "Validates the script", "Compresses the script"],
+        correct: 0
+      },
+      {
+        question: "Which HTML element creates a clickable button?",
+        options: ["click", "button", "input", "btn"],
+        correct: 1
+      },
+      {
+        question: "What is the correct HTML element for an unordered list?",
+        options: ["list", "ul", "ol", "ulist"],
+        correct: 1
+      },
+      {
+        question: "Which attribute specifies the character encoding for HTML documents?",
+        options: ["encoding", "charset", "char", "code"],
+        correct: 1
+      },
+      {
+        question: "What does the article element represent?",
+        options: ["Newspaper article only", "Independent, self-contained content", "Title of document", "Author information"],
+        correct: 1
+      },
+      {
+        question: "Which HTML element is used for client-side scripting?",
+        options: ["javascript", "script", "js", "code"],
+        correct: 1
+      },
+      {
+        question: "What is the correct HTML element for inserting a horizontal rule?",
+        options: ["hr", "line", "rule", "horizontal"],
+        correct: 0
+      },
+      {
+        question: "Which HTML element defines a footer for a document?",
+        options: ["bottom", "footer", "end", "foot"],
+        correct: 1
+      },
+      {
+        question: "What does the readonly attribute do?",
+        options: ["Makes input editable", "Makes input uneditable", "Hides input", "Validates input"],
+        correct: 1
+      },
+      {
+        question: "Which HTML element is used to define a description list?",
+        options: ["dl", "desc", "definition", "dlist"],
+        correct: 0
+      }
             },
             'react-mastery-engine': {
                 title: 'React Mastery Engine',
