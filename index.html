@@ -379,7 +379,7 @@
                 name: "React Mastery Engine",
                 time: 45,
                 description: "Advanced React patterns, hooks, state management, and performance",
-                questionCount: 0
+                questionCount: 400
             },
             {
                 name: "Systems Design for FE",
@@ -587,6 +587,32 @@
 
         // Open practice modal
         function openPracticeModal(categoryName) {
+            async function openPracticeModal(categoryName) {
+    const category = categories.find(c => c.name === categoryName);
+    modalTitle.textContent = categoryName;
+    modalTimeLimitBadge.textContent = `${category.time} minutes`;
+    currentTimeLeft = category.time * 60;
+    updateTimerDisplay();
+    resetTimerState();
+    modal.style.display = 'block';
+
+    if (categoryName === "React Mastery Engine") {
+        const questions = await loadReactQuestions();
+        populateQuestions(questions);
+    }
+}
+function populateQuestions(questions) {
+    const area = document.getElementById('questionArea');
+    area.innerHTML = questions.map(q => `
+        <div class="question-block">
+            <h3>${q.question}</h3>
+            <ul>
+                ${q.options.map(opt => `<li><input type="radio" name="q${q.id}"> ${opt}</li>`).join('')}
+            </ul>
+        </div>
+    `).join('');
+}
+
             const category = categories.find(c => c.name === categoryName);
             modalTitle.textContent = categoryName;
             modalTimeLimitBadge.textContent = `${category.time} minutes`;
@@ -605,7 +631,7 @@
             }
             resetTimerState();
         }
-
+        
         // Timer functions
         function startTimer() {
             if (currentTimer) clearInterval(currentTimer);
