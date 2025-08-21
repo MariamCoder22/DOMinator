@@ -508,6 +508,236 @@
                 questionCount: 0
             }
         ];
+        // Question banks for each category
+const questionBanks = {
+    "Core Skills Combat": [
+        {
+            id: 1,
+            question: "What is the difference between let, const, and var in JavaScript?",
+            options: [
+                "let and const are block-scoped, var is function-scoped",
+                "They are all the same",
+                "const can be reassigned, let cannot",
+                "var is block-scoped, let is function-scoped"
+            ],
+            correct: 0
+        },
+        {
+            id: 2,
+            question: "What does the CSS box model consist of?",
+            options: [
+                "Content, padding, border, margin",
+                "Content, border, outline",
+                "Width, height, padding",
+                "Margin, border, background"
+            ],
+            correct: 0
+        },
+        {
+            id: 3,
+            question: "Which method is used to add an event listener in JavaScript?",
+            options: [
+                "addEventListener()",
+                "attachEvent()",
+                "bindEvent()",
+                "onEvent()"
+            ],
+            correct: 0
+        }
+    ],
+    
+    "React Mastery Engine": [
+        {
+            id: 1,
+            question: "What is the purpose of useEffect hook?",
+            options: [
+                "To perform side effects in functional components",
+                "To manage component state",
+                "To create custom hooks",
+                "To handle component props"
+            ],
+            correct: 0
+        },
+        {
+            id: 2,
+            question: "When does React re-render a component?",
+            options: [
+                "When state or props change",
+                "Every second automatically",
+                "Only when manually triggered",
+                "When the DOM changes"
+            ],
+            correct: 0
+        },
+        {
+            id: 3,
+            question: "What is the purpose of React.memo()?",
+            options: [
+                "To memoize component renders for performance",
+                "To store component data",
+                "To handle component lifecycle",
+                "To manage component state"
+            ],
+            correct: 0
+        }
+    ],
+    
+    "Systems Design for FE": [
+        {
+            id: 1,
+            question: "What is the main benefit of using a CDN?",
+            options: [
+                "Faster content delivery through geographic distribution",
+                "Better code organization",
+                "Automatic code minification",
+                "Enhanced security only"
+            ],
+            correct: 0
+        },
+        {
+            id: 2,
+            question: "What is lazy loading in frontend development?",
+            options: [
+                "Loading resources only when needed",
+                "Loading all resources at once",
+                "Delaying all network requests",
+                "Caching all components"
+            ],
+            correct: 0
+        }
+    ],
+    
+    "CSS Bruteforce Lab": [
+        {
+            id: 1,
+            question: "What does 'flex: 1' mean in CSS flexbox?",
+            options: [
+                "The item will grow to fill available space",
+                "The item has a fixed width of 1px",
+                "The item will shrink by factor of 1",
+                "The item has 1 column"
+            ],
+            correct: 0
+        },
+        {
+            id: 2,
+            question: "How do you create a CSS grid with 3 equal columns?",
+            options: [
+                "grid-template-columns: repeat(3, 1fr)",
+                "grid-columns: 3",
+                "display: grid-3",
+                "grid-template: 3-columns"
+            ],
+            correct: 0
+        }
+    ],
+    
+    "Debug the UI": [
+        {
+            id: 1,
+            question: "What tool is best for debugging CSS layout issues?",
+            options: [
+                "Browser DevTools Elements panel",
+                "Console.log statements",
+                "Alert boxes",
+                "Code comments"
+            ],
+            correct: 0
+        },
+        {
+            id: 2,
+            question: "How do you debug a JavaScript error that only occurs in production?",
+            options: [
+                "Use error monitoring tools and source maps",
+                "Add alert statements everywhere",
+                "Only test in development",
+                "Ignore production errors"
+            ],
+            correct: 0
+        }
+    ]
+};
+
+// Function to get questions for a category
+function getQuestionsForCategory(categoryName) {
+    return questionBanks[categoryName] || [];
+}
+
+// Function to display questions in the modal
+function displayQuestions(categoryName) {
+    const questions = getQuestionsForCategory(categoryName);
+    const questionArea = document.getElementById('questionArea');
+    
+    if (questions.length === 0) {
+        questionArea.innerHTML = `
+            <div class="question-placeholder">
+                <h3>📝 Question Bank Ready</h3>
+                <p>Questions for "${categoryName}" are coming soon!</p>
+                <p><em>Use this time to practice concepts and prepare your own questions.</em></p>
+            </div>
+        `;
+        return;
+    }
+    
+    questionArea.innerHTML = `
+        <div class="questions-container">
+            <h3>📚 Practice Questions</h3>
+            <div class="questions-list">
+                ${questions.map((q, index) => `
+                    <div class="question-item" style="background: #f8f9fa; padding: 20px; margin: 15px 0; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <h4 style="color: #2c3e50; margin-bottom: 15px;">Question ${index + 1}: ${q.question}</h4>
+                        <div class="options">
+                            ${q.options.map((option, optIndex) => `
+                                <label style="display: block; padding: 8px 0; cursor: pointer;">
+                                    <input type="radio" name="question_${q.id}" value="${optIndex}" style="margin-right: 10px;">
+                                    ${option}
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn btn-primary" onclick="checkAnswers('${categoryName}')">Check Answers</button>
+            </div>
+        </div>
+    `;
+}
+
+// Function to check answers
+function checkAnswers(categoryName) {
+    const questions = getQuestionsForCategory(categoryName);
+    let score = 0;
+    let results = [];
+    
+    questions.forEach(q => {
+        const selectedAnswer = document.querySelector(`input[name="question_${q.id}"]:checked`);
+        const isCorrect = selectedAnswer && parseInt(selectedAnswer.value) === q.correct;
+        if (isCorrect) score++;
+        results.push({
+            question: q.question,
+            correct: isCorrect,
+            correctAnswer: q.options[q.correct],
+            selectedAnswer: selectedAnswer ? q.options[parseInt(selectedAnswer.value)] : 'No answer selected'
+        });
+    });
+    
+    // Display results
+    const questionArea = document.getElementById('questionArea');
+    questionArea.innerHTML = `
+        <div class="results-container" style="text-align: center;">
+            <h3 style="color: #2c3e50;">📊 Results</h3>
+            <div class="score-display" style="font-size: 2rem; margin: 20px 0; color: ${score === questions.length ? '#28a745' : '#667eea'};">
+                ${score}/${questions.length} Correct
+            </div>
+            <div class="score-percentage" style="font-size: 1.2rem; color: #666; margin-bottom: 30px;">
+                ${Math.round((score/questions.length) * 100)}%
+            </div>
+            <button class="btn btn-primary" onclick="displayQuestions('${categoryName}')">Try Again</button>
+            <button class="btn btn-success" onclick="completeSession()" style="margin-left: 10px;">Complete Session</button>
+        </div>
+    `;
+}
 
         // State management
         let currentTimer = null;
